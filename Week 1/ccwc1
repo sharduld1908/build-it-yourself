@@ -1,0 +1,58 @@
+#!/bin/bash
+while getopts ":c:l:w" option; do
+    case $option in
+        c)
+            if [ ! -n "$2" ]; then
+                echo "No argument supplied"
+                exit 1
+            fi
+
+            if [ ! -e "$2" ]; then
+                echo "File does not exist"
+                exit 1
+            fi
+
+            bytes=$(wc -c < "$2")
+            echo "$bytes $2"
+            exit 0
+            ;;
+        l)
+            if [ ! -n "$2" ]; then
+                echo "No argument supplied"
+                exit 1
+            fi
+
+            if [ ! -e "$2" ]; then
+                echo "File does not exist"
+                exit 1
+            fi
+
+            lines=$(wc -l < "$2")
+            echo "$lines $2"
+            exit 0
+            ;;
+        w)
+            if [ ! -n "$2" ]; then
+                echo "No argument supplied"
+                exit 1
+            fi
+
+            if [ ! -e "$2" ]; then
+                echo "File does not exist"
+                exit 1
+            fi
+            
+            words=$(wc -w < "$2")
+            echo "$words $2"
+            exit 0
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG"
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            exit 1
+            ;;
+    esac
+done
